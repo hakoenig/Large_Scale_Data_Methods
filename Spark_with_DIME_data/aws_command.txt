@@ -1,0 +1,13 @@
+aws emr create-cluster --release-label emr-5.11.1 \
+--name 'Jupyter Notebooks on EMR' \
+--applications Name=Hadoop Name=Hive Name=Spark Name=Ganglia \
+--ec2-attributes \
+    KeyName=KEYNAME,InstanceProfile=EMR_EC2_DEFAULT,SubnetId=SUBNET-ID,AdditionalMasterSecurityGroups=SECURITY-GROUP \
+--service-role EMR_DefaultRole \
+--instance-groups \
+    InstanceGroupType=MASTER,InstanceCount=1,InstanceType=m4.large \
+    InstanceGroupType=CORE,InstanceCount=2,InstanceType=m4.large \
+--region "us-east-1" \
+--log-uri S3-BUCKET \
+--bootstrap-actions \
+  Name='Install Jupyter',Path="S3_PATH"
