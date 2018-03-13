@@ -55,3 +55,5 @@ print("Accuracy on testset is:", acc)
 # Storing the model
 rfModel.write().overwrite().save("spark_saves/rfModel")
 pipelineModel.write().overwrite().save("spark_saves/pipelineModel")
+
+print("Stored pipeline and model.")

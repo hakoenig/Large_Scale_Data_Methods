@@ -1,5 +1,4 @@
-"""Making predictions"""
-import numpy as np
+"""Making predictions."""
 from flask import Flask
 from flask import request, jsonify
 
@@ -31,9 +30,10 @@ rfModel = RandomForestClassificationModel.load("spark_saves/rfModel")
 
 spark = SparkSession.builder.getOrCreate()
 
-@app.route('/get_prediction', methods=['POST'])
-def score():
 
+@app.route('/get_prediction', methods=['POST'])
+def calc_prob():
+    """Calculate probability for species."""
     input_features = [[float(request.json["sepal_length"]),
                        float(request.json["sepal_width"]),
                        float(request.json["petal_length"]),
@@ -50,5 +50,6 @@ def score():
     result_dict = {labels[i]: probs[i] for i in range(n_predictions)}
     return jsonify(result_dict)
 
+
 if __name__ == '__main__':
-    app.run(port=5001, debug=True)
+    app.run(port=5001)
