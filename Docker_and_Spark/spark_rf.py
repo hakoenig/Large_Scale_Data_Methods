@@ -55,35 +55,3 @@ print("Accuracy on testset is:", acc)
 # Storing the model
 rfModel.write().overwrite().save("spark_saves/rfModel")
 pipelineModel.write().overwrite().save("spark_saves/pipelineModel")
-
-
-# Making predictions
-from pyspark.sql.types import StructType, StructField
-from pyspark.sql.types import StringType, FloatType
-
-from pyspark.ml import PipelineModel
-from pyspark.ml.classification import RandomForestClassificationModel
-
-schema = StructType([
-    StructField("sepal_length", FloatType()),
-    StructField("sepal_width", FloatType()),
-    StructField("petal_length", FloatType()),
-    StructField("petal_width", FloatType()),
-    StructField("class", StringType())
-])
-
-input_features = [[1., 1., 1., 2.]]
-predict_schema = StructType(schema.fields[:-1])
-predict_df = sqlContext.createDataFrame(input_features, schema=predict_schema)
-
-pipelineModel = PipelineModel.load("pipelineModel")
-rfModel = RandomForestClassificationModel.load("rfModel")
-
-transformed_pred_df = pipelineModel.transform(predict_df)
-predictions = rfModel.transform(transformed_pred_df)
-probs = predictions.select('probability').take(1)[0][0]
-
-n_predictions = len(probs)
-labels = pipelineModel.stages[-1].labels
-for i in range(n_predictions):
-    print("{} has probability: {}".format(labels[i], probs[i]))
