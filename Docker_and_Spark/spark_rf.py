@@ -2,6 +2,8 @@
 
 import os
 
+from pyspark.sql import SparkSession
+
 from pyspark.sql.types import StructType, StructField
 from pyspark.sql.types import StringType, FloatType
 
@@ -12,7 +14,7 @@ from pyspark.ml.classification import RandomForestClassifier
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 
 # Load data
-file_path = os.getcwd() + "data/iris_data.csv"
+file_path = os.getcwd() + "/data/iris_data.csv"
 
 schema = StructType([
     StructField("sepal_length", FloatType()),
@@ -22,6 +24,7 @@ schema = StructType([
     StructField("class", StringType())
 ])
 
+spark = SparkSession.builder.getOrCreate()
 dataset = spark.read.csv(file_path, header=True, schema=schema)
 
 # Setting up pipeline to convert features and labels
