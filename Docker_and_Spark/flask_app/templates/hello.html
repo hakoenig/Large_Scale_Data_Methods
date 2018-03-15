@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>Which flower is it?</title>
+       <link rel="stylesheet" media="screen" href ="static/css/bootstrap.min.css">
+       <link rel="stylesheet" href="static/css/bootstrap-theme.min.css">
+       <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+
+
+<div class="container">
+
+
+  <h2>Please submit your feature values.</h2>
+  <br></br>
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="form-group">
+      <label for="sepal_length">Sepal length in cm:</label>
+      <input type="float" class="form-control" id="sepal_length" name="sepal_length" placeholder="Sepal length in cm">
+      <br>
+      <label for="sepal_width">Sepal width in cm:</label>
+      <input type="float" class="form-control" id="sepal_width" name="sepal_width" placeholder="Sepal width in cm">
+      <br>
+      <label for="petal_length">Petal length in cm:</label>
+      <input type="float" class="form-control" id="petal_length" name="petal_length" placeholder="Pental length in cm">
+      <br>
+      <label for="petal_width">Petal width in cm:</label>
+      <input type="float" class="form-control" id="petal_width" name="petal_width" placeholder="Pental width in cm">
+
+    </div>
+    <button type="submit" class="btn btn-success">Get Predictions!</button>
+  </form>
+
+  <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+</div>
+<br>
+</div>
+</div>
+</body>
+</html>

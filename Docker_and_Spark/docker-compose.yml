@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build:
+      context: ./flask_app
+    ports:
+     - "5000:5000"
+    links:
+     - api:api
+  api:
+    build:
+      context: ./api
+    ports:
+     - "5001:5001"
