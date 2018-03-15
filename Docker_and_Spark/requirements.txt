@@ -1,5 +1,0 @@
-numpy
-flask
-sklearn
-wtforms
-pyspark
