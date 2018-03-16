@@ -7,6 +7,7 @@ sudo yum install -y docker
 sudo service docker start
 sudo usermod -a -G docker ec2-user
 sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 Log out and log back in again to pick up the new docker group permissions. Verify that the ec2-user can run Docker commands without sudo:
